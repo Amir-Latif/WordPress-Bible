@@ -1,0 +1,8 @@
+.amb-bible-text-container {
+  direction: rtl;
+}
+.amb-font-resizer-container,
+.amb-verse,
+.amb-chapter {
+  display: flex;
+}
