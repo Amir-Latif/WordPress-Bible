@@ -19,7 +19,7 @@ export default function FontResizer() {
     element.style.fontSize = `${
       action === "normal"
         ? parseInt(localStorage.getItem("originalFontSize"))
-        : action === "augment"
+        : action === "augment" 
         ? currentFontSize + 4
         : currentFontSize - 4
     }px`;
