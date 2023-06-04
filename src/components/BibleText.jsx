@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { books } from "../data/books";
 import { bibleText } from "../data/bibleText";
+import accentRemover from "../services/accentRemover";
+import FontResizer from "./FontResizer";
 
 export default function BibleText() {
   const [text, setText] = useState([]);
@@ -10,7 +12,6 @@ export default function BibleText() {
   const [verse, setVerse] = useState(0);
   const [removeAccents, setRemoveAccents] = useState(false);
   const [pageUpdater, setPageUpdater] = useState(false);
-
   const isFirstRender = useRef(true);
 
   // Get Text
@@ -31,13 +32,8 @@ export default function BibleText() {
   }, [pageUpdater]);
 
   return (
-    <div className="amb-bible-text-container">
-      <div>التحكم في حجم الخط</div>
-      <div className="amb-font-resizer-container">
-        <button>[+]</button>
-        <button>[الحجم الطبيعي]</button>
-        <button>[-]</button>
-      </div>
+    <div className="amb-bible-container">
+      <FontResizer />
 
       <form
         onSubmit={(e) => {
@@ -116,7 +112,11 @@ export default function BibleText() {
         <button type="submit">عرض النص</button>
       </form>
 
-      <label htmlFor="removeAccents">اظهار/ اخفاء التشكيل</label>
+      <div>
+        <a href="bible-search">البحث في الكتاب المقدس</a>
+      </div>
+
+      <label htmlFor="removeAccents">اخفاء التشكيل</label>
       <input
         type="checkbox"
         name="removeAccents"
@@ -162,9 +162,7 @@ export default function BibleText() {
                 <div className="amb-verse">
                   <div style={{ paddingInlineEnd: "5px" }}>{v.v}.</div>
                   {removeAccents ? (
-                    <div>
-                      {v.text.replace(/[ًٌٍَُِّ~ْ]/g, "").replace(/ٱ/g, "ا")}
-                    </div>
+                    <div>{accentRemover(v.text)}</div>
                   ) : (
                     <div>{v.text}</div>
                   )}

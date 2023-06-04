@@ -1,8 +1,9 @@
-.amb-bible-text-container {
+.amb-bible-container {
   direction: rtl;
 }
 .amb-font-resizer-container,
 .amb-verse,
-.amb-chapter {
+.amb-chapter,
+.amb-searchResults {
   display: flex;
 }

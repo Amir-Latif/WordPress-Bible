@@ -49,11 +49,20 @@ function amb_display_bible_text()
 add_shortcode('amb_display_bible_text', 'amb_display_bible_text');
 #endregion Text Display
 
+#region Search
+function amb_display_bible_search()
+{
+    return "<div id='amb-react'></div>";
+}
+add_shortcode('amb_display_bible_search', 'amb_display_bible_search');
+#endregion Search
+
 function amb_add_scripts()
 {
-    global $post;
-
-    if (is_singular() && has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_text')) {
+    if (
+        is_singular() &&
+        (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_text') || has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_search'))
+    ) {
         wp_enqueue_style('ambBibleCss', plugin_dir_url(__FILE__) . 'build/index.css', null, time());
         wp_enqueue_script('ambBibleJs', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-element'), time(), true);
         wp_localize_script("ambBibleJs", "wpObject", ["pageName" => $GLOBALS["pagename"]]);
