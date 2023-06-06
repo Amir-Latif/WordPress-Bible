@@ -1,3 +1,3 @@
 export default function accentRemover(string) {
-  return string.replace(/[ًٌٍَُِّ~ْ]/g, "").replace(/ٱ/g, "ا");
+  return string.replace(/[ٌٍَُِّ~ْ]/g, "").replace(/ٱ/g, "ا");
 }

@@ -33,9 +33,8 @@ export default function BibleText() {
 
   return (
     <div className="amb-bible-container">
-      <FontResizer />
-
       <form
+        className="amb-form amb-block-container"
         onSubmit={(e) => {
           e.preventDefault();
           setPageUpdater(!pageUpdater);
@@ -112,66 +111,70 @@ export default function BibleText() {
         <button type="submit">عرض النص</button>
       </form>
 
-      <div>
-        <a href="bible-search">البحث في الكتاب المقدس</a>
+      <div className="amb-search-container">
+        <a className="amb-search-a" href="bible-search">
+          البحث في الكتاب المقدس
+        </a>
       </div>
 
-      <label htmlFor="removeAccents">اخفاء التشكيل</label>
-      <input
-        type="checkbox"
-        name="removeAccents"
-        onChange={(e) => {
-          setRemoveAccents(e.target.checked);
-        }}
-      />
-
       {/* Text */}
-      <>
+      <div>
         {text.length !== 0 && (
-          <div>
-            <h1>
-              {books.find((b) => b.abbr === book).testament === "old" && "سفر "}
-              {books.find((b) => b.abbr === text[0].b).book}
-            </h1>
-            <div className="amb-chapter">
-              {text[0].c > 1 && (
-                <button
-                  onClick={() => {
-                    setChapter(chapter - 1);
-                    setPageUpdater(!pageUpdater);
-                  }}
-                >
-                  {"<"}
-                </button>
-              )}
-              <h1>أصحاح: {text[0].c}</h1>
-              {chapter < books.find((b) => b.abbr === book).chapters.length && (
-                <button
-                  onClick={() => {
-                    setChapter(chapter + 1);
-                    setPageUpdater(!pageUpdater);
-                  }}
-                >
-                  {">"}
-                </button>
-              )}
-            </div>
-            {text.map((v) => (
-              <div key={v.v}>
-                {v.title && <h2>{v.title}</h2>}
-                <div className="amb-verse">
-                  <div style={{ paddingInlineEnd: "5px" }}>{v.v}.</div>
-                  {removeAccents ? (
-                    <div>{accentRemover(v.text)}</div>
-                  ) : (
-                    <div>{v.text}</div>
-                  )}
-                </div>
+          <>
+            <FontResizer setRemoveAccents={setRemoveAccents} />
+            <div>
+              <h1>
+                {books.find((b) => b.abbr === book).testament === "old" &&
+                  "سفر "}
+                {books.find((b) => b.abbr === text[0].b).book}
+              </h1>
+              <div className="amb-d-flex amb-align-items-center">
+                {text[0].c > 1 && (
+                  <button
+                    className="amb-d-flex-switch"
+                    onClick={() => {
+                      setChapter(chapter - 1);
+                      setPageUpdater(!pageUpdater);
+                    }}
+                  >
+                    {"<"}
+                  </button>
+                )}
+                <h1>أصحاح: {text[0].c}</h1>
+                {chapter <
+                  books.find((b) => b.abbr === book).chapters.length && (
+                  <button
+                    className="amb-d-flex-switch"
+                    onClick={() => {
+                      setChapter(chapter + 1);
+                      setPageUpdater(!pageUpdater);
+                    }}
+                  >
+                    {">"}
+                  </button>
+                )}
               </div>
-            ))}
-          </div>
+              <div className="amb-text-container">
+                {text.map((v) => (
+                  <>
+                    <div class="amb-verse-container" key={v.v}>
+                      {v.title && <h2>{v.title}</h2>}
+                      <div className="amb-d-flex">
+                        <div style={{ paddingInlineEnd: "5px" }}>{v.v}.</div>
+                        {removeAccents ? (
+                          <div>{accentRemover(v.text)}</div>
+                        ) : (
+                          <div>{v.text}</div>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </div>
+            </div>
+          </>
         )}
-      </>
+      </div>
     </div>
   );
 }

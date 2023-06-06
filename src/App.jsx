@@ -1,5 +1,6 @@
 import BibleSearch from "./components/BibleSearch";
 import BibleText from "./components/BibleText";
+import "./styles/amb-styles.css"
 
 export default function App() {
 

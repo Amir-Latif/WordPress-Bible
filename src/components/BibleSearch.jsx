@@ -5,15 +5,16 @@ import accentRemover from "../services/accentRemover";
 import FontResizer from "./FontResizer";
 
 export default function BibleSearch() {
+  const isFirstRender = useRef(true);
+
+  //#region Get results
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [removeAccents, setRemoveAccents] = useState(false);
   const [testament, setTestament] = useState("all");
   const [book, setBook] = useState("all");
   const [pageUpdater, setPageUpdater] = useState(false);
-  const isFirstRender = useRef(true);
 
-  //#region Get results
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -42,12 +43,57 @@ export default function BibleSearch() {
   }, [pageUpdater]);
   //#endregion
 
+  //#region pagination
+  const [searchStart, setSearchStart] = useState(0);
+  const [searchEnd, setSearchEnd] = useState(0);
+
+  const resultsPerPage = 50;
+  const numberOfPages = Math.ceil(searchResults.length / resultsPerPage);
+  const lastStart = (numberOfPages - 1) * resultsPerPage;
+  const lastEnd = numberOfPages * resultsPerPage - 1;
+
+  function nextPage(page) {
+    if (page === "last") {
+      setSearchStart(lastStart);
+      setSearchEnd(lastEnd);
+      return;
+    }
+    if (searchStart + resultsPerPage > lastStart) setSearchStart(0);
+    else setSearchStart(searchStart + resultsPerPage);
+
+    if (searchEnd + resultsPerPage > lastEnd) setSearchEnd(resultsPerPage - 1);
+    else setSearchEnd(searchEnd + resultsPerPage);
+  }
+
+  function previousPage(page) {
+    if (page === "first") {
+      setSearchStart(0);
+      setSearchEnd(resultsPerPage - 1);
+      return;
+    }
+    if (searchStart === 0) return;
+    else setSearchStart(searchStart - resultsPerPage);
+
+    if (searchEnd === resultsPerPage - 1) return;
+    else setSearchEnd(searchEnd - resultsPerPage);
+  }
+  //#endregion
+
+  //#region Custom Validation message
+  useEffect(() => {
+    document.querySelector("input").oninvalid = function (e) {
+      e.target.setCustomValidity("برجاء كتابة كلمات البحث");
+    };
+  }, []);
+  //#endregion
+
   return (
     <div className="amb-bible-container">
-      <FontResizer />
       <form
+        className="amb-form amb-block-container"
         onSubmit={(e) => {
           e.preventDefault();
+          setSearchEnd(resultsPerPage - 1);
           setPageUpdater(!pageUpdater);
         }}
       >
@@ -78,6 +124,7 @@ export default function BibleSearch() {
           </select>
         </div>
         <div className="amb-form-group">
+          <label htmlFor="query">البحث</label>
           <input
             type="text"
             name="query"
@@ -86,49 +133,92 @@ export default function BibleSearch() {
           />
         </div>
 
-        <button type="submit">عرض نتائج البحث</button>
+        <button style={{ marginTop: "1em" }} type="submit">
+          عرض نتائج البحث
+        </button>
       </form>
 
-      <label htmlFor="removeAccents">اخفاء التشكيل</label>
-      <input
-        type="checkbox"
-        name="removeAccents"
-        onChange={(e) => {
-          setRemoveAccents(e.target.checked);
-        }}
-      />
-
       {/* Search Results */}
-      <div>
-        {searchResults.length > 0 ? (
-          <>
+      {searchResults.length > 0 ? (
+        <>
+          <FontResizer setRemoveAccents={setRemoveAccents} />
+          <div className="amb-text-container">
             <div>عدد نتائج البحث = {searchResults.length}</div>
-            {searchResults.map((r, i) => (
-              <div key={i}>
-                <div className="amb-searchResults">
-                  <div className="amb-verse">{i + 1}.</div>
-                  <div>{books.find((e) => e.abbr === r.b).book} </div>
+            {searchResults.slice(searchStart, searchEnd).map((r, i) => (
+              <div className="amb-verse-container" key={i}>
+                <div className="amb-d-flex">
+                  <div className="amb-search-verse">{i + 1}.</div>
+                  <div className="amb-search-ref">
+                    <div>
+                      {"{"}
+                      {books.find((e) => e.abbr === r.b).book}{" "}
+                    </div>
+                    <div>{r.c} :</div>
+                    <div>
+                      {r.v}
+                      {"}"}
+                    </div>
+                  </div>
                 </div>
                 <div>
-                  {removeAccents
-                    ? accentRemover(
-                        r.text.replace(
-                          new RegExp(`${query}`, "g"),
-                          `<span style="color: blue">${query}</span>`
+                  {removeAccents ? (
+                    <>
+                      {accentRemover(r.text).split(query)[0]}
+                      <span style={{ color: "blue" }}>{query} </span>
+                      {accentRemover(r.text).split(query)[1]}
+                    </>
+                  ) : (
+                    r.text
+                      .split(/[\s،:؟.؛!]/)
+                      .map((w) =>
+                        accentRemover(w) === accentRemover(query) ? (
+                          <span style={{ color: "blue" }}>{w} </span>
+                        ) : (
+                          `${w} `
                         )
                       )
-                    : r.text.replace(
-                        new RegExp(`${query}`, "g"),
-                        `<span style="color: blue">${query}</span>`
-                      )}
+                  )}
                 </div>
               </div>
             ))}
-          </>
-        ) : (
-          <div>لا يوجد نتائج بالبحث</div>
-        )}
-      </div>
+
+            {/* Page Controller */}
+            <div className="amb-page-controller amb-d-flex amb-align-items-center amb-justify-content-center">
+              {searchStart !== 0 && (
+                <>
+                  <button
+                    className="amb-d-flex-switch"
+                    onClick={() => previousPage("first")}
+                  >
+                    {"<<"}
+                  </button>
+                  <button className="amb-d-flex-switch" onClick={previousPage}>
+                    {"<"}
+                  </button>
+                </>
+              )}
+              <div>
+                صفحة {searchStart / resultsPerPage + 1} من {numberOfPages}
+              </div>
+              {searchEnd !== lastEnd && (
+                <>
+                  <button className="amb-d-flex-switch" onClick={nextPage}>
+                    {">"}
+                  </button>
+                  <button
+                    className="amb-d-flex-switch"
+                    onClick={() => nextPage("last")}
+                  >
+                    {">>"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div>لا يوجد نتائج بالبحث</div>
+      )}
     </div>
   );
 }
