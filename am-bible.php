@@ -16,27 +16,51 @@
 #region Create pages: text - search
 function amb_create_bible_pages()
 {
-    // Create the page object
-    $bible_text_page = array(
-        'post_title' => 'Bible Text',
-        'post_content' => "<!-- wp:shortcode -->
-        [amb_display_bible_text]
-        <!-- /wp:shortcode -->",
-        'post_status' => 'publish',
-        'post_type' => 'page',
-    );
-    $bible_search_page = array(
-        'post_title' => 'Bible Search',
-        'post_content' => "<!-- wp:shortcode -->
-        [amb_display_bible_search]
-        <!-- /wp:shortcode -->",
-        'post_status' => 'publish',
-        'post_type' => 'page',
+    // If bible text page does not exist, create it
+    $page_check = new WP_Query(
+        array(
+            'post_type'      => 'page',
+            'post_title'     => "Bible Text",
+            'posts_per_page' => 1,
+        )
     );
 
-    // Insert the page into the database
-    $bible_text_page_id = wp_insert_post($bible_text_page);
-    $bible_search_page_id = wp_insert_post($bible_search_page);
+    if (empty($page_check)) {
+        // Create the page object
+        $bible_text_page = array(
+            'post_title' => 'Bible Text',
+            'post_content' => "<!-- wp:shortcode -->
+        [amb_display_bible_text]
+        <!-- /wp:shortcode -->",
+            'post_status' => 'publish',
+            'post_type' => 'page',
+        );
+
+        // Insert the page into the database
+        $bible_text_page_id = wp_insert_post($bible_text_page);
+    }
+
+    // If bible search page does not exist, create it
+    $page_check = new WP_Query(
+        array(
+            'post_type'      => 'page',
+            'post_title'     => "Bible Search",
+            'posts_per_page' => 1,
+        )
+    );
+    if (empty($page_check)) {
+        $bible_search_page = array(
+            'post_title' => 'Bible Search',
+            'post_content' => "<!-- wp:shortcode -->
+        [amb_display_bible_search]
+        <!-- /wp:shortcode -->",
+            'post_status' => 'publish',
+            'post_type' => 'page',
+        );
+
+        // Insert the page into the database
+        $bible_search_page_id = wp_insert_post($bible_search_page);
+    }
 }
 register_activation_hook(__FILE__, 'amb_create_bible_pages');
 #endregion
