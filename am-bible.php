@@ -87,9 +87,9 @@ function amb_add_scripts()
         is_singular() &&
         (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_text') || has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_search'))
     ) {
-        wp_enqueue_style('ambBibleCss', plugin_dir_url(__FILE__) . 'build/index.css', null, time());
-        wp_enqueue_script('ambBibleJs', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-element'), time(), true);
-        wp_localize_script("ambBibleJs", "wpObject", ["pageName" => $GLOBALS["pagename"]]);
+        wp_enqueue_style('ambCss', plugin_dir_url(__FILE__) . 'build/index.css', null, time());
+        wp_enqueue_script('ambJs', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-element'), time(), true);
+        wp_localize_script("ambJs", "wpObject", ["pageName" => $GLOBALS["pagename"]]);
     }
 }
 add_action('wp_enqueue_scripts', 'amb_add_scripts');

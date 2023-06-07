@@ -1,2 +1,229 @@
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/styles/amb-styles.css ***!
+  \*******************************************************************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Amiri&display=swap);
-.amb-bible-container{direction:rtl}.amb-block-container{background-color:#eee;border-radius:10px;margin-block:1em;padding:20px}.amb-font-resize-label{font-weight:500;margin-block:.5em}.amb-d-flex{display:flex}.amb-align-items-center{align-items:center}.amb-justify-content-center{justify-content:center}label{-webkit-margin-end:1em;margin-inline-end:1em}select{font-size:1em}button{-webkit-margin-end:10px;background-color:#007bff;border:none;border-radius:5px;color:#fff;cursor:pointer;font-size:1.25em;font-weight:600;margin-inline-end:10px;padding:5px 10px}.amb-search-container{margin-block:2em}.amb-search-a{color:#07c;font-size:1.5em;font-weight:700;transition:color .2s ease-in}.amb-search-a:hover{color:#005299}.amb-font-resizer-container{align-items:center;display:flex;flex-direction:row;margin-bottom:1em}.amb-font-resizer-container button:hover{background-color:#0062cc}input,select{box-shadow:2px 2px 5px rgba(0,0,0,.1)}.amb-form{display:flex;flex-direction:column;gap:10px;max-width:500px}.amb-form label{font-size:18px}.amb-form input[type=checkbox],.amb-form select{border:1px solid #d5d5d5;border-radius:5px;padding:5px}.amb-form input[type=checkbox]{height:20px;width:20px}.amb-form input[type=checkbox],input[type=text]{height:2em}.amb-form button{margin-top:1em}.amb-d-flex-switch{height:2em;margin-inline:1em}.amb-text-container{font-family:amiri;font-size:14pt;line-height:21pt;margin-top:20px}.amb-text-container h1{font-size:32px;font-weight:700;margin-bottom:10px}.amb-text-container h2{font-size:24px;font-weight:700;margin-bottom:10px}.amb-text-container p{font-size:18px;line-height:1.5}.amb-verse-container{margin-block:1em}.amb-search-verse{-webkit-margin-end:.5em;display:flex;margin-inline-end:.5em}.amb-search-ref{display:flex}.amb-search-ref div{-webkit-margin-end:.5em;margin-inline-end:.5em}.amb-page-controller{border:solid #e5e5e5;border-radius:10px;margin-block:3em;padding:.5em}.amb-page-controller button{height:1.5em;margin-inline:5px}
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/styles/spinner.module.css ***!
+  \***********************************************************************************************************************************************************************************/
+.Eh1JQfry5l1POrCcXjOr {
+  position: fixed;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+._ljtWqaop6ZdjTqNzb9g {
+  direction: rtl;
+  width: 70px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+._ljtWqaop6ZdjTqNzb9g > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  animation: _39bQVubExQAK_mgyyQ0O 2s infinite ease-in-out;
+}
+
+._ljtWqaop6ZdjTqNzb9g .PjdTplubPi5l1UNZMlaj {
+  animation-delay: -0.32s;
+}
+
+._ljtWqaop6ZdjTqNzb9g .pQOLU5cCTy52Xa8ibWRu {
+  animation-delay: -0.16s;
+}
+
+@keyframes _39bQVubExQAK_mgyyQ0O {
+  0%,
+  100%,
+  80% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/styles/amb-styles.css (1) ***!
+  \***********************************************************************************************************************************************************************************/
+.amb-bible-container {
+  direction: rtl;
+}
+
+.amb-block-container {
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 20px;
+  margin-block: 1em;
+}
+
+.amb-font-resize-label {
+  margin-block: 0.5em;
+  font-weight: 500;
+}
+
+/* Flex */
+.amb-d-flex {
+  display: flex;
+}
+.amb-align-items-center {
+  align-items: center;
+}
+.amb-justify-content-center {
+  justify-content: center;
+}
+
+label {
+  -webkit-margin-end: 1em;
+          margin-inline-end: 1em;
+}
+select {
+  font-size: 1em;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.25em;
+  font-weight: 600;
+  padding: 5px 10px;
+  -webkit-margin-end: 10px;
+          margin-inline-end: 10px;
+}
+
+.amb-search-container {
+  margin-block: 2em;
+}
+.amb-search-a {
+  font-size: 1.5em;
+  color: #0077cc;
+  font-weight: bold;
+  transition: color 0.2s ease-in;
+}
+
+.amb-search-a:hover {
+  color: #005299;
+}
+
+/* font resizer */
+.amb-font-resizer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.amb-font-resizer-container button:hover {
+  background-color: #0062cc;
+}
+
+/* Form */
+input, select {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.amb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+}
+.amb-form label {
+  font-size: 18px;
+}
+.amb-form select,
+.amb-form input[type="checkbox"] {
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  padding: 5px;
+}
+.amb-form input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+.amb-form input[type="checkbox"],
+input[type="text"] {
+  height: 2em;
+}
+.amb-form button {
+  margin-top: 1em;
+}
+
+/* Text Display */
+.amb-d-flex-switch {
+  height: 2em;
+  margin-inline: 1em;
+}
+
+.amb-text-container {
+  font-family: amiri;
+  font-size: 14pt;
+  line-height: 21pt;
+  margin-top: 20px;
+}
+
+.amb-text-container h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.amb-text-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.amb-text-container p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Search */
+.amb-verse-container {
+  margin-block: 1em;
+}
+
+.amb-search-verse {
+  display: flex;
+  -webkit-margin-end: 0.5em;
+          margin-inline-end: 0.5em;
+}
+
+.amb-search-ref {
+  display: flex;
+}
+.amb-search-ref div {
+  -webkit-margin-end: 0.5em;
+          margin-inline-end: 0.5em;
+}
+
+/* Page Controller */
+.amb-page-controller {
+  border: solid #e5e5e5;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-block: 3em;
+}
+
+.amb-page-controller button {
+  margin-inline: 5px;
+  height: 1.5em;
+}
+
+
+/*# sourceMappingURL=index.css.map*/
