@@ -17,18 +17,10 @@
 function amb_create_bible_pages()
 {
     // If bible text page does not exist, create it
-    $page_check = new WP_Query(
-        array(
-            'post_type'      => 'page',
-            'post_title'     => "Bible Text",
-            'posts_per_page' => 1,
-        )
-    );
-
-    if (empty($page_check)) {
+       if (!get_page_by_path("الكتاب-المقدس")) {
         // Create the page object
         $bible_text_page = array(
-            'post_title' => 'Bible Text',
+            'post_title' => 'الكتاب المقدس',
             'post_content' => "<!-- wp:shortcode -->
         [amb_display_bible_text]
         <!-- /wp:shortcode -->",
@@ -41,16 +33,9 @@ function amb_create_bible_pages()
     }
 
     // If bible search page does not exist, create it
-    $page_check = new WP_Query(
-        array(
-            'post_type'      => 'page',
-            'post_title'     => "Bible Search",
-            'posts_per_page' => 1,
-        )
-    );
-    if (empty($page_check)) {
+    if (!get_page_by_path("بحث-في-الكتاب-المقدس")) {
         $bible_search_page = array(
-            'post_title' => 'Bible Search',
+            'post_title'     => "بحث في الكتاب المقدس",
             'post_content' => "<!-- wp:shortcode -->
         [amb_display_bible_search]
         <!-- /wp:shortcode -->",
@@ -79,6 +64,14 @@ function amb_display_bible_search()
     return "<div id='amb-react'></div>";
 }
 add_shortcode('amb_display_bible_search', 'amb_display_bible_search');
+#endregion Search
+#region Search
+function amb_debugger()
+{
+    return  print_r(gettype(get_page_by_path("debugger")));
+    // return  empty(get_page_by_path("بحث-في-الكتاب-المقدس"));
+}
+add_shortcode('amb_debugger', 'amb_debugger');
 #endregion Search
 
 function amb_add_scripts()

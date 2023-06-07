@@ -1,5 +1,5 @@
 import React from "react";
-import SpSt from "../styles/spinner.module.css";
+import SpSt from "../styles/spinner.module.scss";
 
 export default function Spinner() {
   return (

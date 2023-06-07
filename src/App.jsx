@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import BibleSearch from "./components/BibleSearch";
 import BibleText from "./components/BibleText";
 import Spinner from "./components/Spinner";
-import "./styles/amb-styles.css";
+import "./styles/amb-styles.scss";
+
+const pageName = decodeURIComponent(wpObject.pageName)
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,11 +19,11 @@ export default function App() {
   let component = <Spinner />;
 
   if (!isLoading) {
-    if (wpObject.pageName === "bible-text") {
+    if (pageName === "الكتاب-المقدس") {
       component = <BibleText />;
-    } else if (wpObject.pageName === "bible-search") {
+    } else if (pageName === "بحث-في-الكتاب-المقدس") {
       component = <BibleSearch />;
     }
   }
-  return component;
+  return <div className="amb-app">{component}</div>;
 }

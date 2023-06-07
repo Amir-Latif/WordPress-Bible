@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { books } from "../data/books";
 import { bibleText } from "../data/bibleText";
 import accentRemover from "../services/accentRemover";
-import FontResizer from "./FontResizer";
+import SideBlock from "./SideBlock";
 
 export default function BibleSearch() {
   const isFirstRender = useRef(true);
@@ -89,63 +89,65 @@ export default function BibleSearch() {
 
   return (
     <div className="amb-bible-container">
-      <form
-        className="amb-form amb-block-container"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSearchEnd(resultsPerPage - 1);
-          setPageUpdater(!pageUpdater);
-        }}
-      >
-        <div className="amb-form-group">
-          <label htmlFor="testament">العهد</label>
-          <select
-            name="testament"
-            onChange={(e) => setTestament(e.target.value)}
-          >
-            <option value="all">العهد القديم والجديد</option>
-            <option value="old">العهد القديم</option>
-            <option value="new">العهد الجديد</option>
-          </select>
-        </div>
-        <div className="amb-form-group">
-          <label htmlFor="book">السفر</label>
-          <select name="book" onChange={(e) => setBook(e.target.value)}>
-            <option value="all">كل الأسفار</option>
-            {books
-              .filter((b) =>
-                testament === "all" ? b : b.testament === testament
-              )
-              .map((b) => (
-                <option key={b.abbr} value={b.abbr}>
-                  {b.book}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="amb-form-group">
-          <label htmlFor="query">البحث</label>
-          <input
-            type="text"
-            name="query"
-            onChange={(e) => setQuery(e.target.value)}
-            required
-          />
-        </div>
+      <div className="amb-d-flex amb-justify-content-between">
+        <form
+          className="amb-form-flex amb-form amb-block-container"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSearchEnd(resultsPerPage - 1);
+            setPageUpdater(!pageUpdater);
+          }}
+        >
+          <div className="amb-form-group">
+            <label htmlFor="testament">العهد</label>
+            <select
+              name="testament"
+              onChange={(e) => setTestament(e.target.value)}
+            >
+              <option value="all">العهد القديم والجديد</option>
+              <option value="old">العهد القديم</option>
+              <option value="new">العهد الجديد</option>
+            </select>
+          </div>
+          <div className="amb-form-group">
+            <label htmlFor="book">السفر</label>
+            <select name="book" onChange={(e) => setBook(e.target.value)}>
+              <option value="all">كل الأسفار</option>
+              {books
+                .filter((b) =>
+                  testament === "all" ? b : b.testament === testament
+                )
+                .map((b) => (
+                  <option key={b.abbr} value={b.abbr}>
+                    {b.book}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="amb-form-group">
+            <label htmlFor="query">البحث</label>
+            <input
+              type="text"
+              name="query"
+              onChange={(e) => setQuery(e.target.value)}
+              required
+            />
+          </div>
 
-        <button style={{ marginTop: "1em" }} type="submit">
-          عرض نتائج البحث
-        </button>
-      </form>
+          <button style={{ marginTop: "1em" }} type="submit">
+            عرض نتائج البحث
+          </button>
+        </form>
 
+        <SideBlock setRemoveAccents={setRemoveAccents} showSearchLink={false} />
+      </div>
       {/* Search Results */}
       {searchResults.length > 0 ? (
         <>
-          <FontResizer setRemoveAccents={setRemoveAccents} />
           <div className="amb-text-container">
             <div>عدد نتائج البحث = {searchResults.length}</div>
             {searchResults.slice(searchStart, searchEnd).map((r, i) => (
-              <div className="amb-verse-container" key={i}>
+              <p key={i}>
                 <div className="amb-d-flex">
                   <div className="amb-search-verse">{i + 1}.</div>
                   <div className="amb-search-ref">
@@ -179,7 +181,7 @@ export default function BibleSearch() {
                       )
                   )}
                 </div>
-              </div>
+              </p>
             ))}
 
             {/* Page Controller */}
