@@ -17,12 +17,12 @@
 function amb_create_bible_pages()
 {
     // If bible text page does not exist, create it
-       if (!get_page_by_path("الكتاب-المقدس")) {
+    if (!get_page_by_path("الكتاب-المقدس")) {
         // Create the page object
         $bible_text_page = array(
             'post_title' => 'الكتاب المقدس',
             'post_content' => "<!-- wp:shortcode -->
-        [amb_display_bible_text]
+        [amb_display_bible]
         <!-- /wp:shortcode -->",
             'post_status' => 'publish',
             'post_type' => 'page',
@@ -37,7 +37,7 @@ function amb_create_bible_pages()
         $bible_search_page = array(
             'post_title'     => "بحث في الكتاب المقدس",
             'post_content' => "<!-- wp:shortcode -->
-        [amb_display_bible_search]
+        [amb_display_bible]
         <!-- /wp:shortcode -->",
             'post_status' => 'publish',
             'post_type' => 'page',
@@ -51,34 +51,19 @@ register_activation_hook(__FILE__, 'amb_create_bible_pages');
 #endregion
 
 #region Text Display
-function amb_display_bible_text()
+function amb_display_bible()
 {
     return "<div id='amb-react'></div>";
 }
-add_shortcode('amb_display_bible_text', 'amb_display_bible_text');
+add_shortcode('amb_display_bible', 'amb_display_bible');
 #endregion Text Display
 
-#region Search
-function amb_display_bible_search()
-{
-    return "<div id='amb-react'></div>";
-}
-add_shortcode('amb_display_bible_search', 'amb_display_bible_search');
-#endregion Search
-#region Search
-function amb_debugger()
-{
-    return  print_r(gettype(get_page_by_path("debugger")));
-    // return  empty(get_page_by_path("بحث-في-الكتاب-المقدس"));
-}
-add_shortcode('amb_debugger', 'amb_debugger');
-#endregion Search
 
 function amb_add_scripts()
 {
     if (
         is_singular() &&
-        (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_text') || has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible_search'))
+        (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible'))
     ) {
         wp_enqueue_style('ambCss', plugin_dir_url(__FILE__) . 'build/index.css', null, time());
         wp_enqueue_script('ambJs', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-element'), time(), true);
