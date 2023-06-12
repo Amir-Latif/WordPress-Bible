@@ -63,7 +63,8 @@
     font-size: 1em;
   }
 
-  button {
+  button,
+  .amb-d-flex-switch {
     background-color: #007bff;
     border: none;
     border-radius: 5px;
@@ -93,6 +94,11 @@
   }
 
   /* Side Block */
+  .amb-text-details {
+    .amb-bible-name {
+      margin-inline-end: 1em;
+    }
+  }
   .amb-font-resizer-container {
     display: flex;
     flex-direction: row;
@@ -126,6 +132,7 @@
     flex-direction: column;
     gap: 10px;
     max-width: 500px;
+    flex-grow: 2;
   }
   .amb-form label {
     font-size: 18px;
@@ -152,18 +159,22 @@
   .amb-d-flex-switch {
     height: 2em;
     margin-inline: 1em;
+    text-decoration: none;
   }
 
   .amb-text-container h1 {
     margin-bottom: 10px;
+    margin-inline-end: 1em;
   }
   .amb-text-container h2 {
     margin-bottom: 10px;
     color: #991914;
+    margin-block: 1em;
   }
   .amb-text-container p {
     font-size: 21px;
     line-height: 31.5px; /*1.5 font size*/
+    margin-block: 0.25em;
   }
 
   /* Search */

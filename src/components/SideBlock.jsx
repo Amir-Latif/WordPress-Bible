@@ -21,7 +21,6 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
       );
       let preferencedFontSize = "";
 
-      console.log(preferencedFontSize);
       switch (action) {
         case "normal":
           preferencedFontSize = `${21}px`;
@@ -36,7 +35,7 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
         default:
           break;
       }
-      console.log(preferencedFontSize);
+
       elements.forEach((e) => (e.style.fontSize = preferencedFontSize));
 
       const preferencedLineHeight = `${

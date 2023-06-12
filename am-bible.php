@@ -53,11 +53,15 @@ register_activation_hook(__FILE__, 'amb_create_bible_pages');
 #region Text Display
 function amb_display_bible()
 {
+    // TODO Add meta for each page
+    /*
+      <meta name="description" content="Free Web tutorials">
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+    */
     return "<div id='amb-react'></div>";
 }
 add_shortcode('amb_display_bible', 'amb_display_bible');
 #endregion Text Display
-
 
 function amb_add_scripts()
 {

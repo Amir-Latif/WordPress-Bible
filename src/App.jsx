@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import BibleSearch from "./components/BibleSearch";
-import BibleText from "./components/BibleText";
+import BibleSearch from "./pages/BibleSearch";
+import BibleText from "./pages/BibleText";
 import Spinner from "./components/Spinner";
 import "./styles/amb-styles.scss";
 
@@ -8,12 +8,10 @@ const pageName = decodeURIComponent(wpObject.pageName)
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    window.addEventListener("load", () => setIsLoading(false));
 
-    return () => {
-      window.addEventListener("load");
-    };
+  useEffect(() => {
+   setIsLoading(false)
+
   }, []);
 
   let component = <Spinner />;
