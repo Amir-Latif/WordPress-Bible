@@ -1,12 +1,6 @@
 import React from "react";
 
-export default function TextDetails({
-  books,
-  book,
-  text,
-  chapter,
-  verse,
-}) {
+export default function TextDetails({ books, book, text, chapter, verse }) {
   return (
     <section className="amb-text-details">
       <div className="amb-d-flex amb-align-items-center">
@@ -16,7 +10,6 @@ export default function TextDetails({
         </h1>
         {text[0].c > 1 && (
           <a
-          
             className="amb-d-flex-switch"
             href={`الكتاب-المقدس?testament=all&book=${book}&chapter=${
               chapter - 1

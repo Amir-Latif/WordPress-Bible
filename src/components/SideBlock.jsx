@@ -3,20 +3,23 @@ import React, { useEffect } from "react";
 export default function SideBlock({ setRemoveAccents, showSearchLink }) {
   useEffect(() => {
     const preferencedFontSize = localStorage.getItem("preferencedFontSize");
-    const preferencedLineHeight = localStorage.getItem("preferencedFontSize");
+    const preferencedLineHeight = localStorage.getItem("preferencedLineHeight");
     const elements = document.querySelectorAll(".amb-text-container p");
 
     if (elements.length > 0 && preferencedFontSize && preferencedLineHeight) {
-      elements.forEach((e) => (e.style.fontSize = preferencedFontSize));
-      elements.forEach((e) => (e.style.lineHeight = preferencedLineHeight));
+      elements.forEach((e) => {
+        e.style.fontSize = preferencedFontSize;
+        e.style.lineHeight = preferencedLineHeight;
+      });
     }
   }, []);
 
   function resize(action) {
     const elements = document.querySelectorAll(".amb-text-container p");
+    let currentFontSize;
 
     if (elements.length > 0) {
-      const currentFontSize = parseInt(
+      currentFontSize = parseInt(
         window.getComputedStyle(elements[0]).getPropertyValue("font-size")
       );
       let preferencedFontSize = "";
@@ -45,7 +48,7 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
       elements.forEach((e) => (e.style.lineHeight = preferencedLineHeight));
 
       localStorage.setItem("preferencedFontSize", preferencedFontSize);
-      localStorage.setItem("preferencedFontSize", preferencedLineHeight);
+      localStorage.setItem("preferencedLineHeight", preferencedLineHeight);
     }
   }
 
