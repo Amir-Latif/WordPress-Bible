@@ -7,7 +7,7 @@ export default function ColoredUnaccenetdSearch({
 }) {
   let unacQuery = unaccentedQuery;
 
-  const punctuation = /[\s،:؟.؛!]/;
+  const punctuation = /[\s،:؟.؛!«»]/;
   // create array to use it for mapping the words later on
   const accentedArr = accentedPhrase.split(punctuation);
 

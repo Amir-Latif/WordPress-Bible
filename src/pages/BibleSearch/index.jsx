@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from "react";
 import SideBlock from "../../components/SideBlock";
-import { bibleText } from "../../data/bibleText";
-import { books } from "../../data/books";
 import accentRemover, { accents } from "../../services/accentRemover";
 import ColoredUnaccenetdSearch from "./ColoredUnaccenetdSearch";
 
 export default function BibleSearch() {
+  //#region load bible text and books
+  const [books, setBooks] = useState([]);
+  const [bibleText, setBibleText] = useState([]);
+
+  useEffect(() => {
+    fetch(`${ambBuildObject.pluginDir}src/data/books.json`)
+      .then((res) => res.json())
+      .then((books) => setBooks(books));
+
+    fetch(`${ambBuildObject.pluginDir}src/data/bibleText.json`)
+      .then((res) => res.json())
+      .then((bibleText) => setBibleText(bibleText));
+  }, []);
+  //#endregion load bible text and books
+
   const [removeAccents, setRemoveAccents] = useState(false);
 
   //#region Get results
   const searchParams = new URLSearchParams(window.location.search);
   const query = searchParams.get("query");
-  const testament = searchParams.get("testament")
-    ? searchParams.get("testament")
-    : "all";
+  const [testament, setTestament] = useState(
+    searchParams.get("testament") ? searchParams.get("testament") : "all"
+  );
   const book = searchParams.get("book") ? searchParams.get("book") : "all";
 
   let booksCollection = books
@@ -36,7 +49,7 @@ export default function BibleSearch() {
       )
     : [];
 
-  //#endregion
+  //#endregion Get results
 
   //#region pagination
   const [searchStart, setSearchStart] = useState(0);
@@ -49,7 +62,7 @@ export default function BibleSearch() {
 
   useEffect(() => {
     setSearchStart(0);
-    setSearchEnd(resultsPerPage - 1);
+    setSearchEnd(resultsPerPage);
   }, []);
 
   function nextPage(page) {
@@ -68,7 +81,7 @@ export default function BibleSearch() {
   function previousPage(page) {
     if (page === "first") {
       setSearchStart(0);
-      setSearchEnd(resultsPerPage - 1);
+      setSearchEnd(resultsPerPage);
       return;
     }
     if (searchStart === 0) return;
@@ -85,8 +98,7 @@ export default function BibleSearch() {
       e.target.setCustomValidity("برجاء كتابة كلمات البحث");
     };
   }, []);
-  //#endregion
-
+  //#endregion Custom Validation message
   return (
     <main className="amb-bible-container">
       <section className="amb-d-flex amb-justify-content-between">
@@ -96,7 +108,12 @@ export default function BibleSearch() {
         >
           <div className="amb-form-group">
             <label htmlFor="testament">العهد</label>
-            <select name="testament">
+            <select
+              name="testament"
+              onChange={(e) => {
+                setTestament(e.target.value);
+              }}
+            >
               <option value="all">العهد القديم والجديد</option>
               <option value="old">العهد القديم</option>
               <option value="new">العهد الجديد</option>
@@ -135,9 +152,9 @@ export default function BibleSearch() {
           <section className="amb-text-container">
             <div>عدد نتائج البحث = {searchResults.length}</div>
             {searchResults.slice(searchStart, searchEnd).map((r, i) => (
-              <p key={i}>
+              <p className="amb-p" style={{ marginBlock: "1em" }} key={i}>
                 <div className="amb-d-flex">
-                  <div className="amb-search-verse">{i + 1}.</div>
+                  <div className="amb-search-verse">{searchStart + i + 1}.</div>
                   <div className="amb-search-ref">
                     <div>
                       {"{"}
@@ -219,7 +236,11 @@ export default function BibleSearch() {
           </section>
         </>
       ) : (
-        <div>لا يوجد نتائج بالبحث</div>
+        <>
+          {document.readyState === "complete" && (
+            <p className="amb-p">لا يوجد نتائج بالبحث</p>
+          )}
+        </>
       )}
     </main>
   );

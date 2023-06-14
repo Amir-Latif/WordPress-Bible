@@ -53,27 +53,115 @@ register_activation_hook(__FILE__, 'amb_create_bible_pages');
 #region Text Display
 function amb_display_bible()
 {
-    // TODO Add meta for each page
-    /*
-      <meta name="description" content="Free Web tutorials">
-  <meta name="keywords" content="HTML, CSS, JavaScript">
-    */
-    return "<div id='amb-react'></div>";
+    #region Prepare Text
+    $books = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/books.json"), true);
+    $bibleText = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/bibleText.json"), true);
+
+    $selectedText = array_filter($bibleText, function ($e) {
+        $book = $_GET["book"] ?? "GEN";
+        $chapter = !isset($_GET["chapter"]) ? 1 : intval($_GET["chapter"]);
+
+        return $e["b"] === $book && $e["c"] === $chapter;
+    });
+
+    $verse = !isset($_GET["verse"]) ? 0 : intval($_GET["verse"]);
+    if ($verse !==  0) {
+
+        $selectedText = array_filter($selectedText, function ($e) {
+            $verse = !isset($_GET["verse"]) ? 0 : intval($_GET["verse"]);
+            return $e["v"] === $verse;
+        });
+    }
+    #endregion Prepare Text
+
+    #region Prepare text html
+    $text_html = "خطأ في عنوان الصفحة";
+
+    if (sizeof($selectedText) !== 0) {
+        $text_html = "";
+
+        foreach ($selectedText as $verse) {
+            $text_html .= "<div>";
+            if (isset($verse["title"])) {
+                if ($verse["v"] !== 1) {
+                    $text_html .= "<hr>";
+                }
+                $title = $verse["title"];
+                $text_html .= "<h2 class='amb-h2'>$title</h2>";
+            }
+
+            $v = $verse["v"];
+            $text_html .= "<div class='amb-d-flex'><p style='padding-inline-end: 5px' class='amb-p'>$v.</p>";
+
+            $text = $verse["text"];
+
+            $text_html .= "<p class='amb-p'>$text</p>";
+
+            $text_html .= "</div>";
+        }
+    }
+    #endregion Prepare text html
+
+    #region Render
+    ob_start();
+    $_SESSION["books"] = $books;
+    $_SESSION["text_html"] = $text_html;
+    $_SESSION["book"] = $_GET["book"] ?? "GEN";
+    $_SESSION["chapter"] = isset($_GET["chapter"]) ? intval($_GET["chapter"]) : 1;
+    $_SESSION["verse"] = $verse;
+    $_SESSION["error"] = sizeof($selectedText) === 0;
+    include('templates/amb-bible-text.php');
+
+    $page_content = ob_get_clean();
+
+    if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس")
+        return $page_content;
+    else return "<div id='amb-react'></div>";
+    #endregion render
 }
 add_shortcode('amb_display_bible', 'amb_display_bible');
 #endregion Text Display
 
-function amb_add_scripts()
+#region add meta tags
+function amb_add_meta_tags()
 {
+    $meta_description = urldecode($GLOBALS['pagename']) === "الكتاب-المقدس" ? "نص الكتاب المقدس" : "بحث في الكتاب المقدس";
+
     if (
         is_singular() &&
         (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible'))
     ) {
-        wp_enqueue_style('ambCss', plugin_dir_url(__FILE__) . 'build/index.css', null, time());
-        wp_enqueue_script('ambJs', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-element'), time(), true);
-        wp_localize_script("ambJs", "wpObject", ["pageName" => $GLOBALS["pagename"]]);
+        echo "<meta name='description' content='$meta_description'>";
+        echo '<meta name="keywords" content="الكتاب المقدس">';
+    }
+}
+add_action('wp_head', 'amb_add_meta_tags');
+
+#endregion add meta tags
+
+#region add scripts
+function amb_add_scripts()
+{
+    $page_name = urldecode($GLOBALS["pagename"]);
+    $plugin_dir = plugin_dir_url(__FILE__);
+
+    if (
+        is_singular() &&
+        (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible'))
+    ) {
+        // global
+        wp_enqueue_style('ambCssGlobal', $plugin_dir . 'styles/amb-styles.css', null, time());
+
+        // build
+        wp_enqueue_style('ambCss', $plugin_dir . 'build/index.css', null, time());
+        wp_enqueue_script('ambBuild', $plugin_dir . 'build/index.js', array('wp-element'), time(), true);
+        wp_localize_script("ambBuild", "ambBuildObject", ["pageName" => $page_name, "pluginDir" => $plugin_dir]);
+
+        // Bible Text
+        if ($page_name === "الكتاب-المقدس")
+            wp_enqueue_script('ambBibleText', $plugin_dir . 'scripts/amb-script.js', null, time(), true);
     }
 }
 add_action('wp_enqueue_scripts', 'amb_add_scripts');
-
+#endregion add scripts
 ?>

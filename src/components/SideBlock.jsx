@@ -4,7 +4,7 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
   useEffect(() => {
     const preferencedFontSize = localStorage.getItem("preferencedFontSize");
     const preferencedLineHeight = localStorage.getItem("preferencedLineHeight");
-    const elements = document.querySelectorAll(".amb-text-container p");
+    const elements = document.querySelectorAll(".amb-p");
 
     if (elements.length > 0 && preferencedFontSize && preferencedLineHeight) {
       elements.forEach((e) => {
@@ -15,14 +15,14 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
   }, []);
 
   function resize(action) {
-    const elements = document.querySelectorAll(".amb-text-container p");
+    const elements = document.querySelectorAll(".amb-p");
     let currentFontSize;
+    let preferencedFontSize = "";
 
     if (elements.length > 0) {
       currentFontSize = parseInt(
         window.getComputedStyle(elements[0]).getPropertyValue("font-size")
       );
-      let preferencedFontSize = "";
 
       switch (action) {
         case "normal":
@@ -39,13 +39,12 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
           break;
       }
 
-      elements.forEach((e) => (e.style.fontSize = preferencedFontSize));
+      const preferencedLineHeight = `${parseInt(preferencedFontSize) * 1.7}px`;
 
-      const preferencedLineHeight = `${
-        parseInt(elements[0].style.fontSize) * 1.5
-      }px`;
-
-      elements.forEach((e) => (e.style.lineHeight = preferencedLineHeight));
+      elements.forEach((e) => {
+        e.style.fontSize = preferencedFontSize;
+        e.style.lineHeight = preferencedLineHeight;
+      });
 
       localStorage.setItem("preferencedFontSize", preferencedFontSize);
       localStorage.setItem("preferencedLineHeight", preferencedLineHeight);
@@ -82,9 +81,10 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
         <label htmlFor="removeAccents">اخفاء التشكيل</label>
         <input
           type="checkbox"
+          className="amb-accent-remover"
           name="removeAccents"
           onChange={(e) => {
-            setRemoveAccents(e.target.checked);
+            !showSearchLink && setRemoveAccents(e.target.checked);
           }}
         />
       </div>

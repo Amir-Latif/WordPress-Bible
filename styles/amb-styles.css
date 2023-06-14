@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
+.amb-app {
+  font-family: amiri;
+  /* Flex */
+  /* Side Block */
+  /* Form */
+  /* Text Display */
+  /* Search */
+  /* Page Controller */
+}
+.amb-app h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+.amb-app h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.amb-app h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.amb-app .amb-bible-container {
+  direction: rtl;
+}
+.amb-app hr {
+  border-style: dashed;
+  width: 2em;
+  margin-inline-start: 0;
+}
+.amb-app .amb-block-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 20px;
+  margin-block: 1em;
+}
+.amb-app .amb-side-block {
+  align-items: center;
+}
+.amb-app .amb-accent-removing-div {
+  margin-block-start: 1em;
+}
+.amb-app .amb-d-flex {
+  display: flex;
+}
+.amb-app .amb-align-items-center {
+  align-items: center;
+}
+.amb-app .amb-justify-content-center {
+  justify-content: center;
+}
+.amb-app .amb-justify-content-between {
+  justify-content: space-between;
+}
+.amb-app label {
+  margin-inline-end: 1em;
+}
+.amb-app select {
+  font-size: 1em;
+}
+.amb-app button,
+.amb-app .amb-d-flex-switch {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.25em;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin-inline-end: 10px;
+}
+.amb-app .amb-search-container {
+  margin-block-start: 1em;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+.amb-app .amb-search-a {
+  font-size: 1.5em;
+  color: #0077cc;
+  font-weight: bold;
+  transition: color 0.2s ease-in;
+}
+.amb-app .amb-search-a:hover {
+  color: #005299;
+}
+.amb-app .amb-text-details .amb-bible-name {
+  margin-inline-end: 1em;
+}
+.amb-app .amb-font-resizer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.amb-app .amb-font-resizer-container button:hover {
+  background-color: #0062cc;
+}
+.amb-app input,
+.amb-app select {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.amb-app .amb-form-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 1em;
+}
+.amb-app .amb-form-grid button {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.amb-app .amb-form-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  flex-grow: 2;
+}
+.amb-app .amb-form label {
+  font-size: 18px;
+}
+.amb-app .amb-form select,
+.amb-app .amb-form input {
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  padding: 5px;
+}
+.amb-app .amb-form input[type=checkbox] {
+  height: 20px;
+  width: 20px;
+}
+.amb-app .amb-form input[type=checkbox],
+.amb-app input[type=text] {
+  height: 1.5em;
+}
+.amb-app .amb-form button {
+  margin-top: 1em;
+}
+.amb-app .amb-d-flex-switch {
+  height: 2em;
+  margin-inline: 1em;
+  text-decoration: none;
+}
+
+.amb-h2 {
+  margin-bottom: 10px;
+  color: #991914;
+  margin-block: 1em;
+}
+.amb-p {
+  font-size: 21px;
+  line-height: 35.7px; /*1.7 font size*/
+  margin-block: 0.25em;
+}
+.amb-app .amb-search-verse {
+  display: flex;
+  margin-inline-end: 0.5em;
+}
+.amb-app .amb-search-ref {
+  display: flex;
+}
+.amb-app .amb-search-ref div {
+  margin-inline-end: 0.5em;
+}
+.amb-app .amb-page-controller {
+  border: solid #e5e5e5;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-block: 3em;
+}
+.amb-app .amb-page-controller button {
+  margin-inline: 5px;
+  height: 1.5em;
+}
