@@ -92,13 +92,6 @@ export default function BibleSearch() {
   }
   //#endregion
 
-  //#region Custom Validation message
-  useEffect(() => {
-    document.querySelector("input").oninvalid = function (e) {
-      e.target.setCustomValidity("برجاء كتابة كلمات البحث");
-    };
-  }, []);
-  //#endregion Custom Validation message
   return (
     <main className="amb-bible-container">
       <section className="amb-d-flex amb-justify-content-between">
@@ -136,7 +129,15 @@ export default function BibleSearch() {
           </div>
           <div className="amb-form-group">
             <label htmlFor="query">البحث</label>
-            <input type="text" name="query" required />
+            <input
+              type="text"
+              name="query"
+              required
+              onInvalid={(e) => {
+                if (e.target.validity.valueMissing)
+                  e.target.setCustomValidity("برجاء عدم ترك خانة البحث فارغة");
+              }}
+            />
           </div>
 
           <button style={{ marginTop: "1em" }} type="submit">

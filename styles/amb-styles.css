@@ -1,12 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
 .amb-app {
   font-family: amiri;
-  /* Flex */
-  /* Side Block */
-  /* Form */
-  /* Text Display */
-  /* Search */
-  /* Page Controller */
+  text-align: initial; /* To cancel the customer's container setting*/
 }
 .amb-app h1 {
   font-size: 2em;
@@ -128,14 +123,14 @@
   border-radius: 5px;
   padding: 5px;
 }
-.amb-app .amb-form input[type=checkbox] {
+.amb-app .amb-form input[type="checkbox"] {
   height: 20px;
   width: 20px;
 }
-.amb-app .amb-form input[type=checkbox],
-.amb-app input[type=text] {
+/* .amb-app .amb-form input[type="checkbox"],
+.amb-app input[type="text"] {
   height: 1.5em;
-}
+} */
 .amb-app .amb-form button {
   margin-top: 1em;
 }

@@ -1,4 +1,4 @@
-.spinnerContainer {
+.amb-spinner-container {
   position: fixed;
   z-index: 9999;
   height: 100%;
@@ -11,7 +11,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-.spinner {
+.amb-spinner {
   direction: rtl;
   width: 70px;
   height: 30px;
@@ -19,7 +19,7 @@
   font-size: 10px;
 }
 
-.spinner > div {
+.amb-spinner > div {
   width: 18px;
   height: 18px;
   background-color: #333;
@@ -30,12 +30,12 @@
   animation: sk-bounce 2s infinite ease-in-out;
 }
 
-.spinner .bounce1 {
+.amb-spinner .amb-bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-.spinner .bounce2 {
+.amb-spinner .amb-bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }

@@ -4,10 +4,11 @@
     })
 )[0];
 
-$base_link = "<a class='amb-d-flex-switch' href='الكتاب-المقدس?testament=all&book=";
-$base_link .= $_SESSION['book'] . "&chapter=";
-$prev_link = $base_link . $_SESSION['chapter'] - 1 . "&verse=0'><</a>";
-$next_link = $base_link . $_SESSION['chapter'] + 1 . "&verse=0'>></a>";
+$prev_chapter = $_SESSION['chapter'] - 1;
+$next_chapter = $_SESSION['chapter'] + 1;
+$base_link = "<a class='amb-d-flex-switch' href='الكتاب-المقدس?testament=all&book={$_SESSION['book']}&chapter=";
+$prev_link = "{$base_link}{$prev_chapter}&verse=0'><</a>";
+$next_link = "{$base_link}{$next_chapter}&verse=0'>></a>";
 ?>
 
 <section class="amb-text-details">
@@ -20,7 +21,7 @@ $next_link = $base_link . $_SESSION['chapter'] + 1 . "&verse=0'>></a>";
             echo $current_book["book"];
             ?>
         </h1>
-        
+
         <?php if ($_SESSION["chapter"] > 1) echo $prev_link; ?>
         <h1>أصحاح: <?php echo $_SESSION["chapter"]; ?></h1>
         <?php if ($_SESSION["chapter"] !== sizeof($current_book["chapters"])) echo $next_link; ?>

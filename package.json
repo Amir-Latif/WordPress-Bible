@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wordpress/scripts": "^26.6.0",
-    "sass": "^1.63.3"
+    "@wordpress/scripts": "^26.6.0"
   }
 }

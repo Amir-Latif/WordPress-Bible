@@ -111,12 +111,20 @@ function amb_display_bible()
     $_SESSION["verse"] = $verse;
     $_SESSION["error"] = sizeof($selectedText) === 0;
     include('templates/amb-bible-text.php');
+    include('templates/amb-spinner.php');
 
     $page_content = ob_get_clean();
 
     if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس")
         return $page_content;
-    else return "<div id='amb-react'></div>";
+    else {
+        ob_start();
+        include('templates/amb-spinner.php');
+
+        $page_content = ob_get_clean();
+
+        return "{$page_content}<div id='amb-react'></div>";
+    }
     #endregion render
 }
 add_shortcode('amb_display_bible', 'amb_display_bible');
@@ -152,14 +160,17 @@ function amb_add_scripts()
         // global
         wp_enqueue_style('ambCssGlobal', $plugin_dir . 'styles/amb-styles.css', null, time());
 
+        // spinner
+        wp_enqueue_style('ambSpinnerCss', $plugin_dir . 'styles/amb-spinner.css', null, time());
+        wp_enqueue_script('ambSpinnerJs', $plugin_dir . 'scripts/ambSpinner.js', array('wp-element'), time(), true);
+
         // build
-        wp_enqueue_style('ambCss', $plugin_dir . 'build/index.css', null, time());
         wp_enqueue_script('ambBuild', $plugin_dir . 'build/index.js', array('wp-element'), time(), true);
         wp_localize_script("ambBuild", "ambBuildObject", ["pageName" => $page_name, "pluginDir" => $plugin_dir]);
 
         // Bible Text
         if ($page_name === "الكتاب-المقدس")
-            wp_enqueue_script('ambBibleText', $plugin_dir . 'scripts/amb-script.js', null, time(), true);
+            wp_enqueue_script('ambAccent', $plugin_dir . 'scripts/ambAccent.js', null, time(), true);
     }
 }
 add_action('wp_enqueue_scripts', 'amb_add_scripts');

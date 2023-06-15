@@ -7,7 +7,7 @@ document
   .addEventListener("change", (e) => {
     if (e.target.checked) {
       accentedText = textContainer.innerHTML;
-      
+
       document.querySelectorAll("p").forEach((p) => {
         p.textContent = p.textContent.replaceAll(/[ٌٍَُِّ~ْ]/g, "");
         p.textContent = p.textContent.replaceAll(/ٱ/g, "ا");
@@ -17,3 +17,5 @@ document
     }
   });
 //#endregion Accent Removing
+
+
