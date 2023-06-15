@@ -133,7 +133,7 @@ add_shortcode('amb_display_bible', 'amb_display_bible');
 #region add meta tags
 function amb_add_meta_tags()
 {
-    $meta_description = urldecode($GLOBALS['pagename']) === "الكتاب-المقدس" ? "نص الكتاب المقدس" : "بحث في الكتاب المقدس";
+    $meta_description = "اقرأ وابحث النص الكامل للكتاب المقدس";
 
     if (
         is_singular() &&
