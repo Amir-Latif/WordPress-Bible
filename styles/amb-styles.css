@@ -3,10 +3,7 @@
   font-family: amiri;
   text-align: initial; /* To cancel the customer's container setting*/
 }
-.amb-app h1 {
-  font-size: 2em;
-  font-weight: bold;
-}
+
 .amb-app h2 {
   font-size: 1.5em;
   font-weight: bold;
@@ -145,6 +142,11 @@
   color: #991914;
   margin-block: 1em;
 }
+.amb-selected-verse {
+  background-color: yellow;
+  border-radius: 5px;
+}
+
 .amb-p {
   font-size: 21px;
   line-height: 35.7px; /*1.7 font size*/

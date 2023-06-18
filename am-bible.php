@@ -13,7 +13,15 @@
 ?>
 <?php
 
-#region Create pages: text - search
+#region data class initialization
+require_once("services/amBible.php");
+$amBible = new AmBible(
+    $books = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/books.json"), true),
+    $bible_text = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/bibleText.json"), true),
+);
+#endregion
+
+#region Create pages: text - search on registery
 function amb_create_bible_pages()
 {
     // If bible text page does not exist, create it
@@ -50,38 +58,20 @@ function amb_create_bible_pages()
 register_activation_hook(__FILE__, 'amb_create_bible_pages');
 #endregion
 
-#region Text Display
+#region Text Display using shortcode
 function amb_display_bible()
 {
-    #region Prepare Text
-    $books = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/books.json"), true);
-    $bibleText = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/bibleText.json"), true);
+    global $amBible;
 
-    $selectedText = array_filter($bibleText, function ($e) {
-        $book = $_GET["book"] ?? "GEN";
-        $chapter = !isset($_GET["chapter"]) ? 1 : intval($_GET["chapter"]);
-
-        return $e["b"] === $book && $e["c"] === $chapter;
-    });
-
-    $verse = !isset($_GET["verse"]) ? 0 : intval($_GET["verse"]);
-    if ($verse !==  0) {
-
-        $selectedText = array_filter($selectedText, function ($e) {
-            $verse = !isset($_GET["verse"]) ? 0 : intval($_GET["verse"]);
-            return $e["v"] === $verse;
-        });
-    }
-    #endregion Prepare Text
-
-    #region Prepare text html
+    #region Prepare html
     $text_html = "خطأ في عنوان الصفحة";
 
-    if (sizeof($selectedText) !== 0) {
+    if (sizeof($amBible->selected_text) !== 0) {
         $text_html = "";
 
-        foreach ($selectedText as $verse) {
+        foreach ($amBible->selected_text as $verse) {
             $text_html .= "<div>";
+
             if (isset($verse["title"])) {
                 if ($verse["v"] !== 1) {
                     $text_html .= "<hr>";
@@ -90,26 +80,27 @@ function amb_display_bible()
                 $text_html .= "<h2 class='amb-h2'>$title</h2>";
             }
 
-            $v = $verse["v"];
-            $text_html .= "<div class='amb-d-flex'><p style='padding-inline-end: 5px' class='amb-p'>$v.</p>";
+            if ($amBible->verse !== 0 && $amBible->verse === $verse["v"]) {
+                $text_html .= "<div class='amb-selected-verse'>";
+            }
 
-            $text = $verse["text"];
+            $text_html .= "<div class='amb-d-flex'><p style='padding-inline-end: 5px' class='amb-p'>{$verse["v"]}.</p>";
 
-            $text_html .= "<p class='amb-p'>$text</p>";
+            $text_html .= "<p class='amb-p'>{$verse['text']}</p>";
 
             $text_html .= "</div>";
+
+            if ($amBible->verse !== 0 && $amBible->verse === $verse["v"]) {
+                $text_html .= "</div>";
+            }
         }
     }
     #endregion Prepare text html
 
     #region Render
     ob_start();
-    $_SESSION["books"] = $books;
     $_SESSION["text_html"] = $text_html;
-    $_SESSION["book"] = $_GET["book"] ?? "GEN";
-    $_SESSION["chapter"] = isset($_GET["chapter"]) ? intval($_GET["chapter"]) : 1;
-    $_SESSION["verse"] = $verse;
-    $_SESSION["error"] = sizeof($selectedText) === 0;
+    $_SESSION["error"] = sizeof($amBible->selected_text) === 0;
     include('templates/amb-bible-text.php');
     include('templates/amb-spinner.php');
 
@@ -133,7 +124,16 @@ add_shortcode('amb_display_bible', 'amb_display_bible');
 #region add meta tags
 function amb_add_meta_tags()
 {
-    $meta_description = "اقرأ وابحث النص الكامل للكتاب المقدس";
+    global $amBible;
+
+    $meta_description = "الكتاب المقدس بالتشكيل وبدون - ";
+
+    if ($amBible->selected_book["testament"] === "old") {
+        $meta_description .= "سفر ";
+    }
+
+    $meta_description .= "{$amBible->book_name} - أصحاح {$amBible->chapter}.\nاقرأ الانجيل بالعهد القديم والعهد الجديد كاملاً مع شرح الانجيل";
+
 
     if (
         is_singular() &&
@@ -146,6 +146,33 @@ function amb_add_meta_tags()
 add_action('wp_head', 'amb_add_meta_tags');
 
 #endregion add meta tags
+
+#region update html page title
+function amb_change_page_title($title)
+{
+    global $amBible;
+
+    if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") {
+        $title['title'] = $amBible->title;
+    }
+    return $title;
+}
+add_filter('document_title_parts', 'amb_change_page_title', 10, 1);
+
+#endregion update post title
+
+#region update post title
+function amb_change_post_title($post_data)
+{
+    if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") {
+        global $amBible;
+
+        $post_data->post_title = $amBible->title;
+    }
+}
+
+add_action('the_post', 'amb_change_post_title');
+#endregion update post title
 
 #region add scripts
 function amb_add_scripts()

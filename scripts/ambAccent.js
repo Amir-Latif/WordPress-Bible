@@ -9,7 +9,7 @@ document
       accentedText = textContainer.innerHTML;
 
       document.querySelectorAll("p").forEach((p) => {
-        p.textContent = p.textContent.replaceAll(/[ٌٍَُِّ~ْ]/g, "");
+        p.textContent = p.textContent.replaceAll(/[ًٌٍَُِّ~ْ]/g, "");
         p.textContent = p.textContent.replaceAll(/ٱ/g, "ا");
       });
     } else {
