@@ -28,6 +28,13 @@ export default function BibleText() {
   );
   //#endregion
 
+  //#region Append verse heading after form submission
+  useEffect(() => {
+    if (verse !== 0) window.location.href += "#verse";
+  }, [verse]);
+
+  //#endregion Append verse heading after form submission
+
   return (
     <section className="amb-d-flex amb-justify-content-between">
       {books.length > 0 && (

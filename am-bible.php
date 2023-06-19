@@ -81,7 +81,7 @@ function amb_display_bible()
             }
 
             if ($amBible->verse !== 0 && $amBible->verse === $verse["v"]) {
-                $text_html .= "<div class='amb-selected-verse'>";
+                $text_html .= "<div id='verse' class='amb-selected-verse'>";
             }
 
             $text_html .= "<div class='amb-d-flex'><p style='padding-inline-end: 5px' class='amb-p'>{$verse["v"]}.</p>";
@@ -132,7 +132,8 @@ function amb_add_meta_tags()
         $meta_description .= "سفر ";
     }
 
-    $meta_description .= "{$amBible->book_name} - أصحاح {$amBible->chapter}.\nاقرأ الانجيل بالعهد القديم والعهد الجديد كاملاً مع شرح الانجيل";
+    $meta_description .= "{$amBible->book_name} أصحاح {$amBible->chapter}،\n
+    اقرأ الانجيل بالعهد القديم والعهد الجديد كاملاً مع تفسير الكتاب المقدس";
 
 
     if (
@@ -157,13 +158,13 @@ function amb_change_page_title($title)
     }
     return $title;
 }
-add_filter('document_title_parts', 'amb_change_page_title', 10, 1);
-
+// add_filter('document_title_parts', 'amb_change_page_title');
 #endregion update post title
 
 #region update post title
 function amb_change_post_title($post_data)
 {
+
     if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") {
         global $amBible;
 
@@ -177,6 +178,7 @@ add_action('the_post', 'amb_change_post_title');
 #region add scripts
 function amb_add_scripts()
 {
+    global $amBible;
     $page_name = urldecode($GLOBALS["pagename"]);
     $plugin_dir = plugin_dir_url(__FILE__);
 
@@ -189,7 +191,8 @@ function amb_add_scripts()
 
         // spinner
         wp_enqueue_style('ambSpinnerCss', $plugin_dir . 'styles/amb-spinner.css', null, time());
-        wp_enqueue_script('ambSpinnerJs', $plugin_dir . 'scripts/ambSpinner.js', array('wp-element'), time(), true);
+        wp_enqueue_script('ambMainJs', $plugin_dir . 'scripts/ambMain.js', array('wp-element'), time(), true);
+        wp_localize_script("ambMainJs", "ambMainJsObject", ["title" => $amBible->title]);
 
         // build
         wp_enqueue_script('ambBuild', $plugin_dir . 'build/index.js', array('wp-element'), time(), true);

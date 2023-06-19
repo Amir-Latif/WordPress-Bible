@@ -49,12 +49,12 @@ class AmBible
         }
 
         // The page title and post title
-        $new_title = "الكتاب المقدس | {$this->testament} | ";
+        $new_title = "الكتاب المقدس والانجيل | {$this->testament} | ";
         if ($this->testament === "العهد القديم") {
             $new_title .= "سفر ";
         }
 
-        $this->title = "{$new_title}{$this->book_name} | أصحاح {$this->chapter}";
+        $this->title = "{$new_title}{$this->book_name} أصحاح {$this->chapter}";
 
         // The text that is selected based on the query params
         $this->selected_text = array_filter($this->bible_text, function ($e) {
