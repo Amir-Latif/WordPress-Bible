@@ -8,7 +8,7 @@
  * Requires PHP: 7.0
  * Author: Amir Latif
  * Author URI: https://amir-latif.github.io/portfolio/
- * Text Domain: WordPress Plugins
+ * Text Domain: Bible
  */
 ?>
 <?php
@@ -67,31 +67,22 @@ function amb_display_bible()
     $text_html = "خطأ في عنوان الصفحة";
 
     if (sizeof($amBible->selected_text) !== 0) {
+        // Remove the above page error message before looping
         $text_html = "";
 
         foreach ($amBible->selected_text as $verse) {
-            $text_html .= "<div>";
-
             if (isset($verse["title"])) {
                 if ($verse["v"] !== 1) {
                     $text_html .= "<hr>";
                 }
                 $title = $verse["title"];
-                $text_html .= "<h2 class='amb-h2'>$title</h2>";
+                $text_html .= "<h2 class='amb-h2 amb-p'>$title</h2>";
             }
 
             if ($amBible->verse !== 0 && $amBible->verse === $verse["v"]) {
-                $text_html .= "<div id='verse' class='amb-selected-verse'>";
-            }
-
-            $text_html .= "<div class='amb-d-flex'><p style='padding-inline-end: 5px' class='amb-p'>{$verse["v"]}.</p>";
-
-            $text_html .= "<p class='amb-p'>{$verse['text']}</p>";
-
-            $text_html .= "</div>";
-
-            if ($amBible->verse !== 0 && $amBible->verse === $verse["v"]) {
-                $text_html .= "</div>";
+                $text_html .= "<p id='verse' class='amb-selected-verse'><span style='padding-inline-end: 5px' class='amb-p'>{$verse["v"]}.</span><span class='amb-p'>{$verse['text']}</span></p>";
+            } else {
+                $text_html .= "<p><span style='padding-inline-end: 5px' class='amb-p'>{$verse["v"]}.</span><span class='amb-p'>{$verse['text']}</span></p>";
             }
         }
     }
@@ -148,7 +139,7 @@ add_action('wp_head', 'amb_add_meta_tags');
 
 #endregion add meta tags
 
-#region update html page title
+#region update html document title
 function amb_change_page_title($title)
 {
     global $amBible;
@@ -158,14 +149,14 @@ function amb_change_page_title($title)
     }
     return $title;
 }
-// add_filter('document_title_parts', 'amb_change_page_title');
+add_filter('document_title_parts', 'amb_change_page_title');
 #endregion update post title
 
 #region update post title
 function amb_change_post_title($post_data)
 {
-
-    if (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") {
+    // isset is due to error of wordpress undefined global variable $pagename
+    if (isset($GLOBALS["pagename"]) && urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") {
         global $amBible;
 
         $post_data->post_title = $amBible->title;
@@ -183,11 +174,10 @@ function amb_add_scripts()
     $plugin_dir = plugin_dir_url(__FILE__);
 
     if (
-        is_singular() &&
-        (has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible'))
+        has_shortcode($GLOBALS['post']->post_content, 'amb_display_bible')
     ) {
         // global
-        wp_enqueue_style('ambCssGlobal', $plugin_dir . 'styles/amb-styles.css', null, time());
+        wp_enqueue_style('ambCssGlobalCss', $plugin_dir . 'styles/amb-styles.css', null, time());
 
         // spinner
         wp_enqueue_style('ambSpinnerCss', $plugin_dir . 'styles/amb-spinner.css', null, time());
@@ -195,12 +185,12 @@ function amb_add_scripts()
         wp_localize_script("ambMainJs", "ambMainJsObject", ["title" => $amBible->title]);
 
         // build
-        wp_enqueue_script('ambBuild', $plugin_dir . 'build/index.js', array('wp-element'), time(), true);
-        wp_localize_script("ambBuild", "ambBuildObject", ["pageName" => $page_name, "pluginDir" => $plugin_dir]);
+        wp_enqueue_script('ambBuildJs', $plugin_dir . 'build/index.js', array('wp-element'), time(), true);
+        wp_localize_script("ambBuildJs", "ambBuildObject", ["pageName" => $page_name]);
 
         // Bible Text
         if ($page_name === "الكتاب-المقدس")
-            wp_enqueue_script('ambAccent', $plugin_dir . 'scripts/ambAccent.js', null, time(), true);
+            wp_enqueue_script('ambAccentjs', $plugin_dir . 'scripts/ambAccent.js', null, time(), true);
     }
 }
 add_action('wp_enqueue_scripts', 'amb_add_scripts');

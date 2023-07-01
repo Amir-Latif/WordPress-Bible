@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SideBlock from "../../components/SideBlock";
+import books from "../../data/books.json";
 
 export default function BibleText() {
-  //#region load bible text and books
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    fetch(`${ambBuildObject.pluginDir}src/data/books.json`)
-      .then((res) => res.json())
-      .then((books) => setBooks(books));
-  }, []);
-
-  //#endregion load bible text and books
-
   //#region Variables
   const searchParams = new URLSearchParams(window.location.search);
 
@@ -34,6 +24,7 @@ export default function BibleText() {
   }, [verse]);
 
   //#endregion Append verse heading after form submission
+
 
   return (
     <section className="amb-d-flex amb-justify-content-between">

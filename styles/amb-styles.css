@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+
 .amb-app {
   font-family: amiri;
   text-align: initial; /* To cancel the customer's container setting*/

@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import SideBlock from "../../components/SideBlock";
 import accentRemover, { accents } from "../../services/accentRemover";
 import ColoredUnaccenetdSearch from "./ColoredUnaccenetdSearch";
+import books from "../../data/books.json";
+import bibleText from "../../data/bibleText.json";
 
 export default function BibleSearch() {
-  //#region load bible text and books
-  const [books, setBooks] = useState([]);
-  const [bibleText, setBibleText] = useState([]);
-
-  useEffect(() => {
-    fetch(`${ambBuildObject.pluginDir}src/data/books.json`)
-      .then((res) => res.json())
-      .then((books) => setBooks(books));
-
-    fetch(`${ambBuildObject.pluginDir}src/data/bibleText.json`)
-      .then((res) => res.json())
-      .then((bibleText) => setBibleText(bibleText));
-  }, []);
-  //#endregion load bible text and books
-
-  const [removeAccents, setRemoveAccents] = useState(false);
+  const [removeAccents, setRemoveAccents] = useState(
+    localStorage.getItem("removeAccent")
+      ? localStorage.getItem("removeAccent")
+      : false
+  );
 
   //#region Get results
   const searchParams = new URLSearchParams(window.location.search);
@@ -92,6 +83,12 @@ export default function BibleSearch() {
   }
   //#endregion
 
+  // #region Remove accent
+  useEffect(() => {
+    localStorage.setItem("removeAccent", removeAccents);
+  }, [removeAccents]);
+  //#endregion Remove accent
+
   return (
     <main className="amb-bible-container">
       <section className="amb-d-flex amb-justify-content-between">
@@ -137,6 +134,11 @@ export default function BibleSearch() {
                 if (e.target.validity.valueMissing)
                   e.target.setCustomValidity("برجاء عدم ترك خانة البحث فارغة");
               }}
+              onChange={(e) => {
+                if (e.target.value !== "") e.target.setCustomValidity("");
+                else
+                  e.target.setCustomValidity("برجاء عدم ترك خانة البحث فارغة");
+              }}
             />
           </div>
 
@@ -145,7 +147,11 @@ export default function BibleSearch() {
           </button>
         </form>
 
-        <SideBlock setRemoveAccents={setRemoveAccents} showSearchLink={false} />
+        <SideBlock
+          removeAccents={removeAccents}
+          setRemoveAccents={setRemoveAccents}
+          showSearchLink={false}
+        />
       </section>
       {/* Search Results */}
       {searchResults.length > 0 ? (

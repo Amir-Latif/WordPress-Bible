@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
-export default function SideBlock({ setRemoveAccents, showSearchLink }) {
+export default function SideBlock({ removeAccents, setRemoveAccents, showSearchLink }) {
+  //#region font resizing
   useEffect(() => {
     const preferencedFontSize = localStorage.getItem("preferencedFontSize");
     const preferencedLineHeight = localStorage.getItem("preferencedLineHeight");
@@ -50,6 +51,7 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
       localStorage.setItem("preferencedLineHeight", preferencedLineHeight);
     }
   }
+  //#endregion font resizing
 
   return (
     <div className="amb-form amb-block-container amb-side-block">
@@ -83,6 +85,7 @@ export default function SideBlock({ setRemoveAccents, showSearchLink }) {
           type="checkbox"
           className="amb-accent-remover"
           name="removeAccents"
+          checked={removeAccents}
           onChange={(e) => {
             !showSearchLink && setRemoveAccents(e.target.checked);
           }}
