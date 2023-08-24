@@ -27,13 +27,13 @@ export default function BibleText() {
 
 
   return (
-    <section className="amb-d-flex amb-justify-content-between">
+    <section className="slb-d-flex slb-justify-content-between">
       {books.length > 0 && (
         <form
           action="الكتاب-المقدس"
-          className="amb-form-flex amb-form amb-block-container"
+          className="slb-form-flex slb-form slb-block-container"
         >
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="testament">العهد</label>
             <select
               name="testament"
@@ -44,7 +44,7 @@ export default function BibleText() {
               <option value="new">العهد الجديد</option>
             </select>
           </div>
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="book">السفر</label>
             <select
               name="book"
@@ -62,7 +62,7 @@ export default function BibleText() {
                 ))}
             </select>
           </div>
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="chapter">الأصحاح</label>
             <select
               name="chapter"
@@ -80,7 +80,7 @@ export default function BibleText() {
                 ))}
             </select>
           </div>
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="verse">العدد</label>
             <select
               name="verse"

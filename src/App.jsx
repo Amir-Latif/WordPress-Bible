@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BibleSearch from "./pages/BibleSearch";
 import BibleText from "./pages/BibleText";
 
-const pageName = ambBuildObject.pageName;
+const pageName = slbBuildObject.pageName;
 
 export default function App() {
   const [component, setComponent] = useState(<></>);
@@ -13,5 +13,5 @@ export default function App() {
     );
   }, []);
 
-  return <div className="amb-app">{component}</div>;
+  return <div className="slb-app">{component}</div>;
 }

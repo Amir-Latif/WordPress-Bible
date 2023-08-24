@@ -11,7 +11,7 @@ export default function ColoredUnaccenetdSearch({
   // create array to use it for mapping the words later on
   const accentedArr = accentedPhrase.split(punctuation);
 
-  let dict = {};
+  let dict = {"الله": "الله"};
   accentedArr.forEach((e) => {
     dict[accentRemover(e)] = e;
   });
@@ -23,6 +23,7 @@ export default function ColoredUnaccenetdSearch({
   // If the query is part of a sentence, undefined will arise, so here is the solution
 
   const arrayBeforeQuery = unaccentedArr[0].split(punctuation);
+
   if (arrayBeforeQuery[arrayBeforeQuery.length - 1] !== " ") {
     unacQuery = arrayBeforeQuery[arrayBeforeQuery.length - 1] + unacQuery;
 

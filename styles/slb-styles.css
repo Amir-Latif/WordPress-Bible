@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+
+.slb-app {
+  font-family: amiri;
+  text-align: initial; /* To cancel the customer's container setting*/
+}
+
+.slb-app h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.slb-app h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.slb-app .slb-bible-container {
+  direction: rtl;
+}
+.slb-app hr {
+  border-style: dashed;
+  width: 2em;
+  margin-inline-start: 0;
+}
+.slb-app .slb-block-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 20px;
+  margin-block: 1em;
+}
+.slb-app .slb-side-block {
+  align-items: center;
+}
+.slb-app .slb-accent-removing-div {
+  margin-block-start: 1em;
+}
+.slb-app .slb-d-flex {
+  display: flex;
+}
+.slb-app .slb-align-items-center {
+  align-items: center;
+}
+.slb-app .slb-justify-content-center {
+  justify-content: center;
+}
+.slb-app .slb-justify-content-between {
+  justify-content: space-between;
+}
+.slb-app label {
+  margin-inline-end: 1em;
+}
+.slb-app select {
+  font-size: 1em;
+}
+.slb-app button,
+.slb-app .slb-d-flex-switch {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.25em;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin-inline-end: 10px;
+}
+.slb-app .slb-search-container {
+  margin-block-start: 1em;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+.slb-app .slb-search-a {
+  font-size: 1.5em;
+  color: #0077cc;
+  font-weight: bold;
+  transition: color 0.2s ease-in;
+}
+.slb-app .slb-search-a:hover {
+  color: #005299;
+}
+.slb-app .slb-text-details .slb-bible-name {
+  margin-inline-end: 1em;
+}
+.slb-app .slb-font-resizer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.slb-app .slb-font-resizer-container button:hover {
+  background-color: #0062cc;
+}
+.slb-app input,
+.slb-app select {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.slb-app .slb-form-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 1em;
+}
+.slb-app .slb-form-grid button {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.slb-app .slb-form-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  flex-grow: 2;
+}
+.slb-app .slb-form label {
+  font-size: 18px;
+}
+.slb-app .slb-form select,
+.slb-app .slb-form input {
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  padding: 5px;
+}
+.slb-app .slb-form input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+/* .slb-app .slb-form input[type="checkbox"],
+.slb-app input[type="text"] {
+  height: 1.5em;
+} */
+.slb-app .slb-form button {
+  margin-top: 1em;
+}
+.slb-app .slb-d-flex-switch {
+  height: 2em;
+  margin-inline: 1em;
+  text-decoration: none;
+}
+
+.slb-h2 {
+  margin-bottom: 10px;
+  color: #991914;
+  margin-block: 1em;
+}
+.slb-selected-verse {
+  background-color: yellow;
+  border-radius: 5px;
+}
+
+.slb-p {
+  font-size: 21px;
+  line-height: 35.7px; /*1.7 font size*/
+  margin-block: 0.25em;
+}
+.slb-app .slb-search-verse {
+  display: flex;
+  margin-inline-end: 0.5em;
+}
+.slb-app .slb-search-ref {
+  display: flex;
+}
+.slb-app .slb-search-ref div {
+  margin-inline-end: 0.5em;
+}
+.slb-app .slb-page-controller {
+  border: solid #e5e5e5;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-block: 3em;
+}
+.slb-app .slb-page-controller button {
+  margin-inline: 5px;
+  height: 1.5em;
+}

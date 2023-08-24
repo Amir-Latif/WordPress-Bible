@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
-import "../styles/amb-styles.scss";
+import "../styles/slb-styles.scss";
 
 export default function RootLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,5 +9,5 @@ export default function RootLayout({ children }) {
     setIsLoading(false);
   }, []);
 
-  return <div className="amb-app">{isLoading ? <Spinner /> : children}</div>;
+  return <div className="slb-app">{isLoading ? <Spinner /> : children}</div>;
 }

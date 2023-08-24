@@ -7,8 +7,8 @@ import bibleText from "../../data/bibleText.json";
 
 export default function BibleSearch() {
   const [removeAccents, setRemoveAccents] = useState(
-    localStorage.getItem("removeAccent")
-      ? localStorage.getItem("removeAccent")
+    localStorage.getItem("removeAccent") !== null
+      ? localStorage.getItem("removeAccent") === "true"
       : false
   );
 
@@ -90,13 +90,13 @@ export default function BibleSearch() {
   //#endregion Remove accent
 
   return (
-    <main className="amb-bible-container">
-      <section className="amb-d-flex amb-justify-content-between">
+    <main className="slb-bible-container">
+      <section className="slb-d-flex slb-justify-content-between">
         <form
-          className="amb-form-flex amb-form amb-block-container"
+          className="slb-form-flex slb-form slb-block-container"
           action="بحث-في-الكتاب-المقدس"
         >
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="testament">العهد</label>
             <select
               name="testament"
@@ -109,7 +109,7 @@ export default function BibleSearch() {
               <option value="new">العهد الجديد</option>
             </select>
           </div>
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="book">السفر</label>
             <select name="book">
               <option value="all">كل الأسفار</option>
@@ -124,7 +124,7 @@ export default function BibleSearch() {
                 ))}
             </select>
           </div>
-          <div className="amb-form-group">
+          <div className="slb-form-group">
             <label htmlFor="query">البحث</label>
             <input
               type="text"
@@ -156,13 +156,13 @@ export default function BibleSearch() {
       {/* Search Results */}
       {searchResults.length > 0 ? (
         <>
-          <section className="amb-text-container">
+          <section className="slb-text-container">
             <div>عدد نتائج البحث = {searchResults.length}</div>
             {searchResults.slice(searchStart, searchEnd).map((r, i) => (
-              <p className="amb-p" style={{ marginBlock: "1em" }} key={i}>
-                <div className="amb-d-flex">
-                  <div className="amb-search-verse">{searchStart + i + 1}.</div>
-                  <div className="amb-search-ref">
+              <p className="slb-p" style={{ marginBlock: "1em" }} key={i}>
+                <div className="slb-d-flex">
+                  <div className="slb-search-verse">{searchStart + i + 1}.</div>
+                  <div className="slb-search-ref">
                     <div>
                       {"{"}
                       {books.find((e) => e.abbr === r.b).book}{" "}
@@ -203,17 +203,17 @@ export default function BibleSearch() {
             ))}
 
             {/* Page Controller */}
-            <div className="amb-page-controller amb-d-flex amb-align-items-center amb-justify-content-center">
+            <div className="slb-page-controller slb-d-flex slb-align-items-center slb-justify-content-center">
               {searchStart !== 0 && (
                 <>
                   <button
-                    className="amb-d-flex-switch"
+                    className="slb-d-flex-switch"
                     onClick={() => previousPage("first")}
                   >
                     {"<<"}
                   </button>
                   <button
-                    className="amb-d-flex-switch"
+                    className="slb-d-flex-switch"
                     onClick={() => previousPage()}
                   >
                     {"<"}
@@ -226,13 +226,13 @@ export default function BibleSearch() {
               {searchEnd !== lastEnd && (
                 <>
                   <button
-                    className="amb-d-flex-switch"
+                    className="slb-d-flex-switch"
                     onClick={() => nextPage()}
                   >
                     {">"}
                   </button>
                   <button
-                    className="amb-d-flex-switch"
+                    className="slb-d-flex-switch"
                     onClick={() => nextPage("last")}
                   >
                     {">>"}
@@ -245,7 +245,7 @@ export default function BibleSearch() {
       ) : (
         <>
           {document.readyState === "complete" && (
-            <p className="amb-p">لا يوجد نتائج بالبحث</p>
+            <p className="slb-p">لا يوجد نتائج بالبحث</p>
           )}
         </>
       )}

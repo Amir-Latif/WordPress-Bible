@@ -5,7 +5,7 @@ export default function SideBlock({ removeAccents, setRemoveAccents, showSearchL
   useEffect(() => {
     const preferencedFontSize = localStorage.getItem("preferencedFontSize");
     const preferencedLineHeight = localStorage.getItem("preferencedLineHeight");
-    const elements = document.querySelectorAll(".amb-p");
+    const elements = document.querySelectorAll(".slb-p");
 
     if (elements.length > 0 && preferencedFontSize && preferencedLineHeight) {
       elements.forEach((e) => {
@@ -16,7 +16,7 @@ export default function SideBlock({ removeAccents, setRemoveAccents, showSearchL
   }, []);
 
   function resize(action) {
-    const elements = document.querySelectorAll(".amb-p");
+    const elements = document.querySelectorAll(".slb-p");
     let currentFontSize;
     let preferencedFontSize = "";
 
@@ -54,9 +54,9 @@ export default function SideBlock({ removeAccents, setRemoveAccents, showSearchL
   //#endregion font resizing
 
   return (
-    <div className="amb-form amb-block-container amb-side-block">
-      <h3 className="amb-font-resize-label">التحكم في حجم الخط</h3>
-      <div className="amb-font-resizer-container">
+    <div className="slb-form slb-block-container slb-side-block">
+      <h3 className="slb-font-resize-label">التحكم في حجم الخط</h3>
+      <div className="slb-font-resizer-container">
         <button
           onClick={() => {
             resize("augment");
@@ -79,11 +79,11 @@ export default function SideBlock({ removeAccents, setRemoveAccents, showSearchL
           -
         </button>
       </div>
-      <div className="amb-d-flex amb-accent-removing-div">
+      <div className="slb-d-flex slb-accent-removing-div">
         <label htmlFor="removeAccents">اخفاء التشكيل</label>
         <input
           type="checkbox"
-          className="amb-accent-remover"
+          className="slb-accent-remover"
           name="removeAccents"
           checked={removeAccents}
           onChange={(e) => {
@@ -92,8 +92,8 @@ export default function SideBlock({ removeAccents, setRemoveAccents, showSearchL
         />
       </div>
       {showSearchLink && (
-        <div className="amb-search-container">
-          <a className="amb-search-a" href="بحث-في-الكتاب-المقدس">
+        <div className="slb-search-container">
+          <a className="slb-search-a" href="بحث-في-الكتاب-المقدس">
             البحث في الكتاب المقدس
           </a>
         </div>
