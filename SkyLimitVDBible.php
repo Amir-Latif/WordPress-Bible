@@ -16,8 +16,8 @@
 #region data class initialization
 require_once("services/slBible.php");
 $slBible = new SlBible(
-    $books = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/books.json"), true),
-    $bible_text = json_decode(file_get_contents(plugin_dir_url(__FILE__) . "src/data/bibleText.json"), true),
+    $books = json_decode(wp_remote_retrieve_body(wp_remote_get(plugin_dir_url(__FILE__) . "src/data/books.json")), true),
+    $bible_text = json_decode(wp_remote_retrieve_body(wp_remote_get(plugin_dir_url(__FILE__) . "src/data/bibleText.json")), true),
 );
 #endregion
 
@@ -86,6 +86,7 @@ function slb_display_bible()
             }
         }
     }
+
     #endregion Prepare text html
 
     #region Render
