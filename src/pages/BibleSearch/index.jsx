@@ -91,6 +91,7 @@ export default function BibleSearch() {
 
   return (
     <main className="slb-bible-container">
+      <h1>بحث في الكتاب المقدس</h1>
       <section className="slb-d-flex slb-justify-content-between">
         <form
           className="slb-form-flex slb-form slb-block-container"

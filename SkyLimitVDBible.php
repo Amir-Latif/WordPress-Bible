@@ -93,6 +93,7 @@ function slb_display_bible()
     ob_start();
     $_SESSION["text_html"] = $text_html;
     $_SESSION["error"] = sizeof($slBible->selected_text) === 0;
+    $_SESSION["title"] = $slBible->title;
     include('templates/slb-bible-text.php');
     include('templates/slb-spinner.php');
 
@@ -118,23 +119,41 @@ function slb_add_meta_tags()
 {
     global $slBible;
 
-    $meta_description = "استكشف الكتاب المقدس بالتشكيل وبدون التشكيل، العهد الجديد، اقرأ ";
 
+    $sefr = "";
     if ($slBible->selected_book["testament"] === "old") {
-        $meta_description .= "سفر ";
+        $sefr = "سفر";
+    }
+    $ahd = "الجديد";
+    if ($slBible->selected_book["testament"] === "old") {
+        $ahd = "القديم";
     }
 
-    $meta_description .= "{$slBible->book_name} أصحاح {$slBible->chapter}، مع تفسير مفصل وشامل لمحتوى الانجيل والكتاب المقدس";
 
+    $meta_description = "موقع الكتاب المقدس, {$sefr} {$slBible->book_name} أصحاح {$slBible->chapter}: ابحث واقرأ النص الكامل للكتاب المقدس مع التفسير, وادوات اخرى من اجل تسهيل كلمة الرب للانسان, العهد $ahd | الكلمة الثابتة";
 
     if (
         is_singular() &&
         (has_shortcode($GLOBALS['post']->post_content, 'slb_display_bible'))
     ) {
+        $keywords = str_replace("|", "،", $slBible->title);
         echo "<meta name='description' content='$meta_description'>";
-        echo '<meta name="keywords" content="الكتاب المقدس">';
+        echo "<meta name='keywords' content='{$keywords}'";
     }
 }
+function slb_remove_yoast_meta()
+{
+    if (
+        is_singular() &&
+        (urldecode($GLOBALS["pagename"]) === "الكتاب-المقدس") &&
+        (has_shortcode($GLOBALS['post']->post_content, 'slb_display_bible'))
+    ) {
+        add_filter('wpseo_title', '__return_empty_string');
+        add_filter('wpseo_metadesc', '__return_empty_string');
+    }
+}
+
+add_action('wp', 'slb_remove_yoast_meta');
 add_action('wp_head', 'slb_add_meta_tags');
 
 #endregion add meta tags
